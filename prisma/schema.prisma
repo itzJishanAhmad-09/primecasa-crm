@@ -1,0 +1,77 @@
+// Prime Casa CRM - Prisma schema
+// Run: npx prisma migrate dev --name init
+// Then: node prisma/seed.mjs
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  AGENT
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         Role      @default(AGENT)
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  leads        Lead[]    @relation("LeadOwner")
+  calls        CallLog[]
+}
+
+model Lead {
+  id           Int        @id @default(autoincrement())
+  name         String
+  phone        String     @unique
+  project      String?
+  budget       String?
+  source       String     @default("Website")
+  stage        String     @default("New")
+  notes        String?
+  visited      Boolean    @default(false)
+  nextFollowUp DateTime?
+  visitDate    DateTime?
+  ownerId      Int?
+  owner        User?      @relation("LeadOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  calls        CallLog[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([ownerId])
+  @@index([stage])
+  @@index([nextFollowUp])
+  @@index([createdAt])
+}
+
+model CallLog {
+  id        Int      @id @default(autoincrement())
+  leadId    Int
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  agentId   Int
+  agent     User     @relation(fields: [agentId], references: [id])
+  outcome   String
+  note      String?
+  createdAt DateTime @default(now())
+
+  @@index([leadId])
+  @@index([agentId])
+}
+
+model Property {
+  id         Int    @id @default(autoincrement())
+  name       String
+  type       String?
+  priceRange String?
+  units      Int    @default(0)
+}

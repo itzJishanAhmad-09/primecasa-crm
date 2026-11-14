@@ -1,0 +1,19 @@
+/* Minimal styles. Replace with your design system / Tailwind as needed. */
+.crm{--red:#c8102e;--red-soft:#fde8ec;--line:#e5e5e8;--mute:#6b6e76;padding:20px;display:grid;gap:12px}
+.crm-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.crm-row.between{justify-content:space-between}
+.crm-card{border:1px solid var(--line,#e5e5e8);border-radius:12px;padding:15px;margin-bottom:12px}
+.crm-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}.crm-kpis .crm-card{margin:0}
+.kpi b{display:block;font-size:27px}.kpi span{color:var(--mute,#6b6e76);font-size:12.5px}.kpi.hot{background:#c8102e;color:#fff}.kpi.hot span{color:#ffe3e8}
+.crm-btn{border:1px solid var(--line,#e5e5e8);background:transparent;color:inherit;padding:8px 13px;border-radius:8px;cursor:pointer;text-decoration:none;font:inherit;font-weight:600}
+.crm-btn.pri{background:#c8102e;border-color:#c8102e;color:#fff}.crm-btn.sm{padding:4px 10px;font-size:12.5px}.crm-btn.dng{color:#c8102e}.crm-btn:disabled{opacity:.5}
+.crm-tbl{overflow-x:auto;margin-top:10px}.crm table{width:100%;border-collapse:collapse;font-size:13px;min-width:560px}
+.crm th{text-align:left;color:var(--mute,#6b6e76);padding:6px 8px;border-bottom:1px solid var(--line,#e5e5e8)}.crm td{padding:9px 8px;border-bottom:1px solid var(--line,#e5e5e8)}.crm tr.click{cursor:pointer}
+.crm-tag{padding:2px 9px;border-radius:99px;font-size:11.5px;font-weight:700;background:#fde8ec;color:#c8102e}.crm-tag.g{background:#e3f6ec;color:#1f9d63}.crm-tag.n{background:#e5e5e8;color:#6b6e76}
+.crm-mute{color:var(--mute,#6b6e76);font-size:12.5px}.crm-od{color:#c8102e;font-weight:700}
+.crm-task{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line,#e5e5e8)}.crm-task>div{flex:1}
+.crm-fun{display:grid;grid-template-columns:92px 1fr 30px;gap:8px;align-items:center;margin:8px 0;font-size:13px}.crm-fun u{display:block;height:18px;border-radius:5px;background:#c8102e;min-width:4px}.crm-fun b{text-align:right}
+.crm-dialog{border:1px solid var(--line,#e5e5e8);border-radius:14px;padding:20px;width:min(640px,94vw);max-height:90vh;overflow:auto}
+.crm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.crm-f{display:grid;gap:3px;font-size:12px;color:var(--mute,#6b6e76);font-weight:600}.crm-f.wide{grid-column:1/-1}
+.crm input,.crm select,.crm textarea,.crm-dialog input,.crm-dialog select,.crm-dialog textarea{font:inherit;padding:8px 10px;border:1px solid var(--line,#e5e5e8);border-radius:8px;max-width:100%}
+.crm-dialog textarea{width:100%;min-height:70px}.crm-log{border-left:2px solid var(--line,#e5e5e8);padding:2px 0 8px 10px;font-size:13px}
+@media(max-width:700px){.crm-grid{grid-template-columns:1fr}}
