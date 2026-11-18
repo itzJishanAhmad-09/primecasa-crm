@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { STAGES, SOURCES, OUTCOMES, fmtDate } from '@/lib/crm-store';
+import Softphone from './Softphone';
 
 const BLANK = { name: '', phone: '', project: '', budget: '', source: 'Facebook', stage: 'New', owner: '', next: '', visit: '', notes: '' };
 
-/* lead = existing lead object, or null for "new lead". Render only when open. */
 export default function LeadDialog({ lead, agents, properties, onSave, onDelete, onLogCall, onClose }) {
   const ref = useRef(null);
   const [f, setF] = useState(lead ?? BLANK);
@@ -12,7 +12,7 @@ export default function LeadDialog({ lead, agents, properties, onSave, onDelete,
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
 
   useEffect(() => { ref.current?.showModal(); }, []);
-  useEffect(() => { if (lead) setF(lead); }, [lead]);
+  useEffect(() => { if (lead) setF(lead); }, [lead?.id]);
 
   const field = (label, k, props = {}) => (
     <label className="crm-f">{label}<input value={f[k] ?? ''} onChange={set(k)} {...props} /></label>
@@ -34,7 +34,7 @@ export default function LeadDialog({ lead, agents, properties, onSave, onDelete,
       </div>
       {lead && (
         <div className="crm-row">
-          <a className="crm-btn sm pri" href={`tel:${lead.phone}`}>Call {lead.phone}</a>
+          <Softphone phone={lead.phone} onCallEnded={() => alert('Call ended. Please log the outcome below.')} />
           <a className="crm-btn sm" target="_blank" rel="noopener noreferrer" href={`https://wa.me/91${lead.phone}`}>WhatsApp</a>
         </div>
       )}
@@ -67,7 +67,7 @@ export default function LeadDialog({ lead, agents, properties, onSave, onDelete,
           </div>
           {lead.calls.length === 0 && <p className="crm-mute">No calls logged yet.</p>}
           {[...lead.calls].reverse().map((c, i) => (
-            <div className="crm-log" key={i}><b>{c.outcome}</b> · {fmtDate(c.date)} {c.time} · {c.by}<div className="crm-mute">{c.note}</div></div>
+            <div className="crm-log" key={i}><b>{c.outcome}</b> Â· {fmtDate(c.date)} {c.time} Â· {c.by}<div className="crm-mute">{c.note}</div></div>
           ))}
         </>
       )}

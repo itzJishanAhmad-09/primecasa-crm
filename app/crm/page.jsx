@@ -9,9 +9,10 @@ import Settings from '@/components/crm/Settings';
 import SiteVisits from '@/components/crm/SiteVisits';
 import Bookings from '@/components/crm/Bookings';
 import Calls from '@/components/crm/Calls';
+import Inbox from '@/components/crm/Inbox';
 import './crm.css';
 
-const TABS = ['Dashboard', 'Leads', 'Follow-ups', 'Visits', 'Bookings', 'Calls', 'Settings'];
+const TABS = ['Dashboard', 'Leads', 'Follow-ups', 'Visits', 'Bookings', 'Calls', 'Inbox', 'Settings'];
 
 export default function CRMPage() {
   const crm = useCRM();
@@ -42,6 +43,7 @@ export default function CRMPage() {
       {tab === 'Visits' && <SiteVisits leads={crm.leads} onOpen={setOpenId} onMarkVisited={crm.markVisited} />}
       {tab === 'Bookings' && <Bookings leads={crm.leads} onOpen={setOpenId} />}
       {tab === 'Calls' && <Calls leads={crm.leads} onOpen={setOpenId} />}
+      {tab === 'Inbox' && <Inbox leads={crm.leads} onSendMessage={crm.sendMessage} />}
       {tab === 'Settings' && (
         <Settings
           properties={crm.properties}

@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/db';
 import { handle, requireUser, HttpError } from '@/lib/auth';
-import { INCLUDE, OUTCOMES, serialize, findLeadFor } from '@/lib/leads';
+import { INCLUDE, OUTCOMES, serialize, findLeadFor, calculateScore } from '@/lib/leads';
 
 export const POST = handle(async (req, { params }) => {
   const u = await requireUser();
@@ -9,12 +9,22 @@ export const POST = handle(async (req, { params }) => {
   if (!OUTCOMES.includes(outcome)) throw new HttpError(400, 'Invalid outcome');
 
   const patch = {};
-  if (outcome === 'Connected' && lead.stage === 'New') patch.stage = 'Contacted';
-  if (outcome === 'Not interested') patch.stage = 'Lost';
+  let newScore = lead.score || 0;
+
+  if (outcome === 'Connected' && lead.stage === 'New') {
+    patch.stage = 'Contacted';
+    newScore = calculateScore(newScore, 'Connected call');
+  }
+  if (outcome === 'Not interested') {
+    patch.stage = 'Lost';
+  }
   if (outcome === 'Callback requested' && !lead.nextFollowUp) {
     const t = new Date(); t.setUTCDate(t.getUTCDate() + 1); t.setUTCHours(0, 0, 0, 0);
     patch.nextFollowUp = t;
   }
+  
+  patch.score = newScore;
+
   const updated = await prisma.$transaction(async (tx) => {
     await tx.callLog.create({ data: { leadId: lead.id, agentId: u.id, outcome, note: String(note || '').slice(0, 2000) } });
     return tx.lead.update({ where: { id: lead.id }, data: patch, include: INCLUDE });
