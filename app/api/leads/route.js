@@ -1,3 +1,5 @@
+﻿export const dynamic = 'force-dynamic';
+
 import { prisma } from '@/lib/db';
 import { handle, requireUser } from '@/lib/auth';
 import { INCLUDE, serialize, scope, leadData } from '@/lib/leads';
@@ -16,3 +18,4 @@ export const POST = handle(async (req) => {
   const lead = await prisma.lead.create({ data, include: INCLUDE });
   return Response.json(serialize(lead), { status: 201 });
 });
+

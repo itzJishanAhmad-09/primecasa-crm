@@ -1,3 +1,5 @@
+﻿export const dynamic = 'force-dynamic';
+
 import { prisma } from '@/lib/db';
 import { handle, requireUser } from '@/lib/auth';
 
@@ -9,3 +11,4 @@ export const POST = handle(async (req) => {
   const r = await prisma.lead.createMany({ data, skipDuplicates: true });
   return Response.json({ imported: r.count });
 });
+

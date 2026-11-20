@@ -1,3 +1,5 @@
+﻿export const dynamic = 'force-dynamic';
+
 import { prisma } from '@/lib/db';
 import { handle, requireUser, requireAdmin, hashPassword, HttpError } from '@/lib/auth';
 
@@ -14,3 +16,4 @@ export const POST = handle(async (req) => {
   const u = await prisma.user.create({ data: { name, email: email.toLowerCase(), passwordHash: await hashPassword(password), role: role === 'ADMIN' ? 'ADMIN' : 'AGENT' } });
   return Response.json({ id: u.id, name: u.name, role: u.role }, { status: 201 });
 });
+

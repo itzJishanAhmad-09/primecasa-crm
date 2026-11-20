@@ -1,3 +1,5 @@
+﻿export const dynamic = 'force-dynamic';
+
 import { prisma } from '@/lib/db';
 import { handle, requireUser, requireAdmin } from '@/lib/auth';
 
@@ -14,3 +16,4 @@ export const POST = handle(async (req) => {
   const p = await prisma.property.create({ data: { name: b.n.trim(), type: b.t || null, priceRange: b.p || null, units: Number(b.u) || 0 } });
   return Response.json(out(p), { status: 201 });
 });
+

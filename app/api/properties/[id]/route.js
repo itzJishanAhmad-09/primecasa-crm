@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { prisma } from '@/lib/db';
 import { handle, requireAdmin } from '@/lib/auth';
 export const DELETE = handle(async (_req, { params }) => {

@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { prisma } from '@/lib/db';
 import { handle, requireUser, HttpError } from '@/lib/auth';
 import { INCLUDE, OUTCOMES, serialize, findLeadFor, calculateScore } from '@/lib/leads';

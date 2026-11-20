@@ -1,3 +1,5 @@
+﻿export const dynamic = 'force-dynamic';
+
 import { handle, requireUser, HttpError } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import { sendWhatsAppMessage } from '@/lib/whatsapp';

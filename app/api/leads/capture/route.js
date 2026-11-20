@@ -1,3 +1,5 @@
+﻿export const dynamic = 'force-dynamic';
+
 import { prisma } from '@/lib/db';
 import { handle, HttpError } from '@/lib/auth';
 
@@ -17,3 +19,4 @@ export const POST = handle(async (req) => {
   } });
   return Response.json({ id: lead.id, assignedTo: agents[0]?.name ?? null }, { status: 201 });
 });
+

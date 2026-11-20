@@ -1,3 +1,5 @@
+﻿export const dynamic = 'force-dynamic';
+
 import { prisma } from '@/lib/db';
 import { handle, HttpError, checkPassword, startSession } from '@/lib/auth';
 
@@ -8,3 +10,4 @@ export const POST = handle(async (req) => {
   await startSession(u);
   return Response.json({ name: u.name, role: u.role });
 });
+
