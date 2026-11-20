@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { STAGES, SOURCES, OUTCOMES, fmtDate } from '@/lib/crm-store';
-import Softphone from './Softphone';
 
 const BLANK = { name: '', phone: '', project: '', budget: '', source: 'Facebook', stage: 'New', owner: '', next: '', visit: '', notes: '' };
 
@@ -34,7 +33,6 @@ export default function LeadDialog({ lead, agents, properties, onSave, onDelete,
       </div>
       {lead && (
         <div className="crm-row">
-          <Softphone phone={lead.phone} onCallEnded={() => alert('Call ended. Please log the outcome below.')} />
           <a className="crm-btn sm" target="_blank" rel="noopener noreferrer" href={`https://wa.me/91${lead.phone}`}>WhatsApp</a>
         </div>
       )}

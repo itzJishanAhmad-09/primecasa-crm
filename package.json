@@ -21,5 +21,10 @@
     "sip.js": "^0.21.2",
     "prisma": "^5.22.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "allowScripts": {
+    "@prisma/client@5.22.0": true,
+    "@prisma/engines@5.22.0": true,
+    "prisma@5.22.0": true
+  }
 }
